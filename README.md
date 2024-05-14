@@ -1,5 +1,43 @@
 # Flutter Coding Challenge
 
+## 実行方法
+
+1. dart_definesフォルダに、「dev.env」、「prod.env」ファイルを作成してください。
+2. 上記ファイルに、以下のように、Google API Key、API Key をそれぞれ記載してください。
+```
+GOOGLE_MAP_API_KEY="XXXXX"
+ENECHANGE_API_KEY="XXXXX"
+```
+
+3. デバッグ、リリースビルドは以下のコマンドをうち実行してください。
+```
+-- デバッグビルド
+flutter run --dart-define-from-file=dart_defines/dev.env
+
+-- リリースビルド
+flutter run --release --dart-define-from-file=dart_defines/prod.env
+```
+
+## アーキテクチャー(フォルダ構成)
+featureファーストをベースに、アーキテクチャー、フォルダ構成を組みました。
+※ pagesフォルダに関してはトップレベルでフォルダ分割をしています。
+(複数のfeatureをpagesで使用可能にするためです)
+
+### メリット
+- 関連する メソッド、モデルが近くにあるため、視認性が良く開発がしやすい。
+- チームで開発する場合は、機能単位で分割して開発ができる。
+
+### features
+関連するモデル単位でまとめた機能を格納したフォルダ。
+配下には、関連するモデルの、model、provider、repositoryを配置しています。
+
+
+
+## その他
+```
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
 ## Instructions
 
 ### Steps
@@ -63,7 +101,7 @@ Flutterで充電スポットマップ画面を作成してください。
 ### 充電スポット一覧API
 
 #### Repositoryクラス
-- API実行については [charger_spots_repository.dart](lib/charger_spots_repository.dart) を用意していますので、適宜ご活用ください
+- API実行については [charger_spots_repository.dart](lib/features/charger_spot/repository/charger_spots_repository.dart) を用意していますので、適宜ご活用ください
 
 #### API Keyの取得、設定
 - APIに必要な認証トークン `X-EVENE-NATIVE-API-TOKEN` は別途お伝えいたします
