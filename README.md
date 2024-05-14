@@ -3,7 +3,7 @@
 ## 実行方法
 
 1. dart_definesフォルダに、「dev.env」、「prod.env」ファイルを作成してください。
-2. 上記ファイルに、以下のように、Google API Key、API Key をそれぞれ記載してください。
+2. 上記ファイルに、以下のように、Google API Key、API Key をそれぞれ記載してください。(今回は、dev.envもprod.envも同じキーが入ります。)
 ```
 GOOGLE_MAP_API_KEY="XXXXX"
 ENECHANGE_API_KEY="XXXXX"
@@ -18,120 +18,64 @@ flutter run --dart-define-from-file=dart_defines/dev.env
 flutter run --release --dart-define-from-file=dart_defines/prod.env
 ```
 
-## アーキテクチャー(フォルダ構成)
-featureファーストをベースに、アーキテクチャー、フォルダ構成を組みました。
-※ pagesフォルダに関してはトップレベルでフォルダ分割をしています。
-(複数のfeatureをpagesで使用可能にするためです)
+## フォルダ構成
+```
 
-### メリット
-- 関連する メソッド、モデルが近くにあるため、視認性が良く開発がしやすい。
-- チームで開発する場合は、機能単位で分割して開発ができる。
+├── common
+│     ├── provider
+│     ├── utility
+│     └── const
+├── features
+│     ├── charger_spot
+│     │     ├── model
+│     │     ├── provider
+│     │     └── repository
+│     └── location
+│           ├── model
+│           ├── provider
+│           └── repository
+└── pages
+      └── google_map_page
+            ├── components
+            ├── constant
+            ├── provider
+            ├── google_map_page.dart
+            └── google_map_page_body.dart
 
-### features
-関連するモデル単位でまとめた機能を格納したフォルダ。
-配下には、関連するモデルの、model、provider、repositoryを配置しています。
+```
+
+### commonフォルダ
+アプリ全体で共通で使用するものを配置する。
+今回は、privider、utility、constを配置。
+
+### featuresフォルダ
+機能単位でフォルダ分けを行う、アプリのコアとなるフォルダ。
+関連するレイヤー(model、repository、provider)をできる限り近くに配置。
+
+今回で言うと、charger_spotというモデルに関するレイヤー(model、repository、provider)をcharger_spotフォルダにまとめて配置している。
+視認性の良さ、チーム開発のしやすさを目指している。
+
+※ featuresフォルダに配置されているproviderは、後述するpagesフォルダ内で直接使用可能。
+
+### pagesフォルダ
+
+画面に関するものが置かれるフォルダ。
+Scaffoldを含んだメインのページ(google_map_page.dart)を起点とし、bodyのWidget(google_map_page_body.dart)別フォルダに切り分け。
+
+components: そのページ内で使用するコンポーネント群
+constant: そのページ内で使用する定数
+provider: そのページ内で使用するprovider (View Model的な立ち位置に近い)、featuresで定義したproviderのデータを画面に適したものに分割する役割もあり。
+
+※ pagesフォルダを、featuresに配置しなかった理由は、複数のfeaturesをpagesが使用する可能性があるためトップレベルでフォルダを分割。
 
 
 
 ## その他
+
+### scoped providerについて
+Widgetにconstを付与するために、Widgetの引数からデータをバケツリレーするのではなく、provider scopedを使用してデータを渡すようにしています。
+
 ```
 flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
-## Instructions
-
-### Steps
-以下2つの方法から選んで進めてください。
-* Forkする
-  * 弊社のリポジトリにPRとして履歴が残ります
-* Templateとして使用する
-  * 弊社側にPRとしては履歴が残りません
-
-#### Fork
-1. このリポジトリをForkしてください。
-2. 新しくブランチを切ってください。
-(ブランチ名は `challenge1/YOURNAME(本名orGithub Account name)` (eg. `challenge1/shirakia`))
-3. flutter_map_appプロジェクトで実装を進めてください(flutter_map_appディレクトリをエディタで開くと進めやすいです)。
-4. 終了後、PullRequestを作成し、PullRequestのURLをご連絡ください。
-5. PullRequestのURLをお伝えいただいた後でもcommitしていただいて構いません。
-
-#### Template
-1. Githubから 「Use this template」を選択し、リポジトリ(privateでも可)を作成してください。
-2. 新しくブランチを切ってください。
-(ブランチ名は `challenge1/YOURNAME(本名orGithub Account name)` (eg. `challenge1/shirakia`))
-3. flutter_map_appプロジェクトで実装を進めてください(flutter_map_appディレクトリをエディタで開くと進めやすいです)。
-4. 終了後、PullRequestを作成し、リポジトリのURLをご連絡ください(privateの場合、指定したユーザーを招待してください)。
-5. リポジトリのURLをお伝えいただいた後でもcommitしていただいて構いません。
-
-### PullRequestの作り方
-PullRequestを作る際に、PRテンプレートが反映されます。
-テンプレートに沿って、PRコメントとして必要事項を記述してください。
-
-## Challenge
-Flutterで充電スポットマップ画面を作成してください。
-
-以下、画面の仕様や使用するAPIの情報です。これらの仕様についてチャレンジ期間の中で可能な範囲で実装してください。
-
-仕様や実装について不明な点があれば適宜ご相談ください。
-
-また、このChallengeはプログラムの完成度を求めるものではなく、挑戦いただく方のスキルレベルをベースに、以下の項目などを総合的に見させて頂く場として作成しております。
-- コードの品質
-- 実装に関する説明
-- 質疑応答
-
-### 画面仕様
-- マップ上の充電スポットのある場所にマーカーを表示してください
-- マーカーにはそのスポットの充電器の数を表示します
-- 画面下部には各充電スポットの名称や写真、営業時間などが記載されたカードをカルーセル表示してください
-- 画面デザインやその他の細かい仕様については [Figma](https://www.figma.com/file/q4i9uo1n4poIbO7iGPbqQH/?node-id=1414-77) をご覧ください（Figmaのアカウントを作成すると細かいところまで閲覧できるようになります）。
-- **Figma内で(Option)と記載させていただいた仕様については、余力があったらトライしてください**
-- 課題の優先度は、高い順に以下の順番になります。確保できる時間に応じて実施する量を適宜調整してください。
-1. [マップ/初期表示](https://www.figma.com/file/q4i9uo1n4poIbO7iGPbqQH/ENECHANGE-%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B8?type=design&node-id=1414-78&mode=design&t=HALw18VIzoL2un47-4)
-1. [マップ/スポットにフォーカス](https://www.figma.com/file/q4i9uo1n4poIbO7iGPbqQH/ENECHANGE-%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B8?type=design&node-id=1417-511&mode=design&t=HALw18VIzoL2un47-4)
-1. [マップ/エリアを移動](https://www.figma.com/file/q4i9uo1n4poIbO7iGPbqQH/ENECHANGE-%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B8?type=design&node-id=1414-319&mode=design&t=HALw18VIzoL2un47-4)
-
-### 使用パッケージについて
-実装の際に、以下パッケージは必ず使用してください(これらはすでにpubspec.yamlに記述してあります)。
-バージョンの指定はございません。
-- [google_maps_flutter](https://pub.dev/packages/google_maps_flutter)
-  - 使用にはGoogleMapのAPIキーが必要です。[GoogleMapの設定方法](#GoogleMapの設定方法)を参考にキー取得、設定をしてください。
-  - **セキュリティの観点からキーはコミットしないようご注意ください**
-- [geolocator](https://pub.dev/packages/geolocator)
-
-### 充電スポット一覧API
-
-#### Repositoryクラス
-- API実行については [charger_spots_repository.dart](lib/features/charger_spot/repository/charger_spots_repository.dart) を用意していますので、適宜ご活用ください
-
-#### API Keyの取得、設定
-- APIに必要な認証トークン `X-EVENE-NATIVE-API-TOKEN` は別途お伝えいたします
-  - **ただし、セキュリティの観点からキーはコミットしないようお願いします。**
-- API KeyはRepositoryクラス内部の `apiKey` に仮定義していますので、適宜書き換えてください
-
-#### API詳細
-- 詳細は[API仕様書](https://stg.evene.jp/apidocs/charger_spots#/charger_spots)をご確認ください
-- モデルクラスなどの詳細を確認したい場合は　[guide_api_sdk](docs/guide_api_sdk.md) を参照ください
-
-#### 課題内部でのAPI使用方法
-- リクエスト: 本課題では緯度経度パラメータ（`sw_lat`,`sw_lng`,`ne_lat`,`ne_lng`）のみを使用します
-- レスポンス: 本課題でメインで使用するものを紹介します
-  - `images`: スポットのサムネイル表示に使用します
-  - `charger_devices`: カード情報やマーカーのスポット数の計算のために使用します
-  - `charger_spot_service_times`: カード内の「営業中/営業時間外」項目で使用します
-  - (`gogoev` と記載のあるパラメーターがいくつかありますが、本課題では使用しません)
-
-### GoogleMapの設定方法
-
-#### API Keyの取得
-[公式ドキュメント](https://pub.dev/packages/google_maps_flutter) を参考にAPI Keyを取得してください。
-
-#### Android
-`android/app/src/main/AndroidManifest.xml` 34行目の
-`YOUR KEY HERE` の部分を上で取得したAPI Keyに置き換えてください。
-
-#### iOS
-`ios/Runner/AppDelegate.swift` 11行目の
-`YOUR KEY HERE` の部分を上で取得したAPI Keyに置き換えてください。
-
-#### 注意
-自身で取得したAPI Keyは<b>絶対に</b>コミットしないでください。
