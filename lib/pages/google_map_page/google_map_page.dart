@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_app/features/charger_spot/provider/fetch_charger_spot_provider.dart';
+import 'package:flutter_map_app/features/location/provider/check_current_location_settings_provider.dart';
 import 'package:flutter_map_app/features/location/provider/fetch_current_location_provider.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../common/widget/show_setting_dialog.dart';
 import 'google_map_page_body.dart';
 
 class GoogleMapPage extends HookConsumerWidget {
@@ -39,8 +42,18 @@ class GoogleMapPage extends HookConsumerWidget {
     });
 
     // 現在地取得のエラー処理
-    ref.listen(fetchCurrentLocationProvider, (previous, next) {
+    ref.listen(checkCurrentLocationSettingsProvider, (previous, next) {
       switch (next) {
+        case AsyncData(:final value):
+          switch (value) {
+            // TODO: 設定画面に遷移させる
+            case ServiceDisable():
+            case PermissionDenied():
+            case PermissionDeniedForever():
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("位置情報が取得できません、設定から位置情報使用の許可をしてください。")));
+            default:
+          }
         case AsyncError(:final error):
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("現在位置情報の取得でエラーが発生しました。")));

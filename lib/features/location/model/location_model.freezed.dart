@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'current_location_model.dart';
+part of 'location_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,35 +14,34 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-CurrentLocationModel _$CurrentLocationModelFromJson(Map<String, dynamic> json) {
-  return _CurrentLocationModel.fromJson(json);
+LocationModel _$LocationModelFromJson(Map<String, dynamic> json) {
+  return _LocationModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CurrentLocationModel {
+mixin _$LocationModel {
   double get latitude => throw _privateConstructorUsedError;
   double get longitude => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CurrentLocationModelCopyWith<CurrentLocationModel> get copyWith =>
+  $LocationModelCopyWith<LocationModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CurrentLocationModelCopyWith<$Res> {
-  factory $CurrentLocationModelCopyWith(CurrentLocationModel value,
-          $Res Function(CurrentLocationModel) then) =
-      _$CurrentLocationModelCopyWithImpl<$Res, CurrentLocationModel>;
+abstract class $LocationModelCopyWith<$Res> {
+  factory $LocationModelCopyWith(
+          LocationModel value, $Res Function(LocationModel) then) =
+      _$LocationModelCopyWithImpl<$Res, LocationModel>;
   @useResult
   $Res call({double latitude, double longitude});
 }
 
 /// @nodoc
-class _$CurrentLocationModelCopyWithImpl<$Res,
-        $Val extends CurrentLocationModel>
-    implements $CurrentLocationModelCopyWith<$Res> {
-  _$CurrentLocationModelCopyWithImpl(this._value, this._then);
+class _$LocationModelCopyWithImpl<$Res, $Val extends LocationModel>
+    implements $LocationModelCopyWith<$Res> {
+  _$LocationModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -69,22 +68,22 @@ class _$CurrentLocationModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$CurrentLocationModelImplCopyWith<$Res>
-    implements $CurrentLocationModelCopyWith<$Res> {
-  factory _$$CurrentLocationModelImplCopyWith(_$CurrentLocationModelImpl value,
-          $Res Function(_$CurrentLocationModelImpl) then) =
-      __$$CurrentLocationModelImplCopyWithImpl<$Res>;
+abstract class _$$LocationModelImplCopyWith<$Res>
+    implements $LocationModelCopyWith<$Res> {
+  factory _$$LocationModelImplCopyWith(
+          _$LocationModelImpl value, $Res Function(_$LocationModelImpl) then) =
+      __$$LocationModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({double latitude, double longitude});
 }
 
 /// @nodoc
-class __$$CurrentLocationModelImplCopyWithImpl<$Res>
-    extends _$CurrentLocationModelCopyWithImpl<$Res, _$CurrentLocationModelImpl>
-    implements _$$CurrentLocationModelImplCopyWith<$Res> {
-  __$$CurrentLocationModelImplCopyWithImpl(_$CurrentLocationModelImpl _value,
-      $Res Function(_$CurrentLocationModelImpl) _then)
+class __$$LocationModelImplCopyWithImpl<$Res>
+    extends _$LocationModelCopyWithImpl<$Res, _$LocationModelImpl>
+    implements _$$LocationModelImplCopyWith<$Res> {
+  __$$LocationModelImplCopyWithImpl(
+      _$LocationModelImpl _value, $Res Function(_$LocationModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -93,7 +92,7 @@ class __$$CurrentLocationModelImplCopyWithImpl<$Res>
     Object? latitude = null,
     Object? longitude = null,
   }) {
-    return _then(_$CurrentLocationModelImpl(
+    return _then(_$LocationModelImpl(
       latitude: null == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
@@ -108,11 +107,11 @@ class __$$CurrentLocationModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CurrentLocationModelImpl implements _CurrentLocationModel {
-  _$CurrentLocationModelImpl({this.latitude = 0, this.longitude = 0});
+class _$LocationModelImpl implements _LocationModel {
+  _$LocationModelImpl({this.latitude = 0, this.longitude = 0});
 
-  factory _$CurrentLocationModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CurrentLocationModelImplFromJson(json);
+  factory _$LocationModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LocationModelImplFromJson(json);
 
   @override
   @JsonKey()
@@ -123,14 +122,14 @@ class _$CurrentLocationModelImpl implements _CurrentLocationModel {
 
   @override
   String toString() {
-    return 'CurrentLocationModel(latitude: $latitude, longitude: $longitude)';
+    return 'LocationModel(latitude: $latitude, longitude: $longitude)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CurrentLocationModelImpl &&
+            other is _$LocationModelImpl &&
             (identical(other.latitude, latitude) ||
                 other.latitude == latitude) &&
             (identical(other.longitude, longitude) ||
@@ -144,26 +143,23 @@ class _$CurrentLocationModelImpl implements _CurrentLocationModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CurrentLocationModelImplCopyWith<_$CurrentLocationModelImpl>
-      get copyWith =>
-          __$$CurrentLocationModelImplCopyWithImpl<_$CurrentLocationModelImpl>(
-              this, _$identity);
+  _$$LocationModelImplCopyWith<_$LocationModelImpl> get copyWith =>
+      __$$LocationModelImplCopyWithImpl<_$LocationModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CurrentLocationModelImplToJson(
+    return _$$LocationModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _CurrentLocationModel implements CurrentLocationModel {
-  factory _CurrentLocationModel(
-      {final double latitude,
-      final double longitude}) = _$CurrentLocationModelImpl;
+abstract class _LocationModel implements LocationModel {
+  factory _LocationModel({final double latitude, final double longitude}) =
+      _$LocationModelImpl;
 
-  factory _CurrentLocationModel.fromJson(Map<String, dynamic> json) =
-      _$CurrentLocationModelImpl.fromJson;
+  factory _LocationModel.fromJson(Map<String, dynamic> json) =
+      _$LocationModelImpl.fromJson;
 
   @override
   double get latitude;
@@ -171,6 +167,6 @@ abstract class _CurrentLocationModel implements CurrentLocationModel {
   double get longitude;
   @override
   @JsonKey(ignore: true)
-  _$$CurrentLocationModelImplCopyWith<_$CurrentLocationModelImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$LocationModelImplCopyWith<_$LocationModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -7,7 +7,7 @@ import 'package:flutter_map_app/features/charger_spot/provider/charger_spot_scop
 import 'package:flutter_map_app/pages/google_map_page/provider/change_location_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../constant.dart';
+import '../../constant/constant.dart';
 import '../../provider/draggable_controller_provider.dart';
 import 'charger_card_image.dart';
 import 'charger_card_info_list.dart';
