@@ -7,7 +7,7 @@ part of 'fetch_current_location_provider.dart';
 // **************************************************************************
 
 String _$fetchCurrentLocationHash() =>
-    r'53c9e208911e0710d3685818beefcccf95f480ce';
+    r'3623cfc897d52a5676d34f9eb3cd8b42f8e32dde';
 
 /// See also [fetchCurrentLocation].
 @ProviderFor(fetchCurrentLocation)
