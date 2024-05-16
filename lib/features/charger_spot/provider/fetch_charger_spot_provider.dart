@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter_map_app/common/utility/api_charger_spot_extension.dart';
 import 'package:flutter_map_app/common/utility/charger_spot_service_time_day_extension.dart';
 import 'package:flutter_map_app/features/charger_spot/model/charger_spot_model.dart';
 import 'package:openapi/api.dart';
@@ -36,9 +37,6 @@ class SuccessData extends ChargerSpotDataStatus {
 
 @riverpod
 class FetchChargerSpotNotifier extends _$FetchChargerSpotNotifier {
-  static const String defaultPower = "0.0";
-  static const String defaultEmpty = "-";
-
   @override
   FutureOr<ChargerSpotDataStatus> build() {
     return _future();
@@ -83,44 +81,14 @@ class FetchChargerSpotNotifier extends _$FetchChargerSpotNotifier {
           latitude: e.latitude as double,
           longitude: e.longitude as double,
           chargerDeviceCount: e.chargerDevices.length,
-          power: e.chargerDevices.isNotEmpty
-              ? double.parse(e.chargerDevices[0].power).toStringAsFixed(1)
-              : defaultPower,
-          todayServiceTime:
-              _getDisplayTodayServiceTime(e.chargerSpotServiceTimes),
+          power: e.getDisplayPower(),
+          todayServiceTime: e.getDisplayTodayServiceTime(),
           nowAvailable: e.nowAvailable == APIChargerSpotNowAvailableEnum.yes,
-          regularClosingDays:
-              _getDisplayRegularClosingDays(e.chargerSpotServiceTimes),
+          regularClosingDays: e.getDisplayRegularClosingDays(),
           images: e.images.map((e) => e.url).toList());
     }).toList();
 
     return SuccessData(data);
-  }
-
-  // TODO: 別Providerでデータ加工の方が良いかも
-  // 今日の営業時間を取得する
-  String _getDisplayTodayServiceTime(List<APIChargerSpotServiceTime> data) {
-    // 今日の営業日を取得
-    final todayServiceTime = data.where((element) => element.today).firstOrNull;
-    final displayTodayServiceTime = (todayServiceTime?.startTime != null ||
-            todayServiceTime?.endTime != null)
-        ? "${todayServiceTime?.startTime} - ${todayServiceTime?.endTime}"
-        : defaultEmpty;
-    return displayTodayServiceTime;
-  }
-
-  // TODO: 別Providerでデータ加工の方が良いかも
-  // 定休日の曜日を取得する。
-  String _getDisplayRegularClosingDays(List<APIChargerSpotServiceTime> data) {
-    final holidayListString = data
-        .where((element) => (element.businessDay ==
-                APIChargerSpotServiceTimeBusinessDayEnum.no &&
-            (element.day != APIChargerSpotServiceTimeDayEnum.weekday &&
-                element.day != APIChargerSpotServiceTimeDayEnum.holiday)))
-        .map((e) => e.day.getJapaneseName())
-        .toList()
-        .join("、");
-    return holidayListString.isEmpty ? defaultEmpty : holidayListString;
   }
 
   // 再検索
