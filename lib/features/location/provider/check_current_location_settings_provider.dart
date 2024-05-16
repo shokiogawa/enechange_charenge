@@ -29,14 +29,6 @@ class Enable extends CurrentLocationSettingStatus {
   const Enable() : super();
 }
 
-// TODO: sealed classに置き換え
-enum LocationSettingResult {
-  serviceDisabled,
-  permissionDenied,
-  permissionDeniedForever,
-  enabled,
-}
-
 // 現在位置を取得する
 // 未許可の場合は、東京駅の場所を表示
 @riverpod
