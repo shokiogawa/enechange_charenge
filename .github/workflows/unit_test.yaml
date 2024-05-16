@@ -1,8 +1,6 @@
 name: unit-test
 
 on:
-  pull_request:
-    types: [opened, synchronize]
   push:
     branches:
       - challenge1/**
