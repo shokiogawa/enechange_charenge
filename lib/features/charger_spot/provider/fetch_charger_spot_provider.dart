@@ -1,6 +1,5 @@
 import 'dart:async';
-import 'package:flutter_map_app/common/utility/api_charger_spot_extension.dart';
-import 'package:flutter_map_app/common/utility/charger_spot_service_time_day_extension.dart';
+import 'package:flutter_map_app/common/extention/api_charger_spot_extension.dart';
 import 'package:flutter_map_app/features/charger_spot/model/charger_spot_model.dart';
 import 'package:openapi/api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map_app/pages/google_map_page/widget/charger_card_list.dart';
+import 'package:flutter_map_app/pages/google_map_page/widget/charger_map.dart';
+import 'package:flutter_map_app/pages/google_map_page/widget/search_field.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'components/charger_card_list.dart';
-import 'components/charger_map.dart';
-import 'components/search_field.dart';
 
 class GoogleMapPageBody extends HookConsumerWidget {
   const GoogleMapPageBody({super.key});
@@ -22,9 +22,7 @@ class GoogleMapPageBody extends HookConsumerWidget {
               child: SearchField(),
             )),
         // 充電一覧
-        Align(
-          alignment: Alignment.bottomCenter,
-            child: ChargerCardList())
+        Align(alignment: Alignment.bottomCenter, child: ChargerCardList())
       ],
     );
   }

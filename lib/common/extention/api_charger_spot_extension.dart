@@ -1,5 +1,5 @@
 
-import 'package:flutter_map_app/common/utility/charger_spot_service_time_day_extension.dart';
+import 'package:flutter_map_app/common/extention/charger_spot_service_time_day_extension.dart';
 import 'package:openapi/api.dart';
 
 extension ApiChargerSpotExtension on APIChargerSpot {
