@@ -12,6 +12,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'dart:ui' as ui;
 
+import '../../../gen/assets.gen.dart';
+
 part 'google_map_marker_provider.g.dart';
 
 @riverpod
@@ -33,7 +35,7 @@ Future<Set<Marker>> googleMapMarker(GoogleMapMarkerRef ref) async {
           ..color = Colors.green;
 
         // 画像読み込み
-        ByteData imageData = await rootBundle.load('assets/images/pin.png');
+        ByteData imageData = await rootBundle.load(Assets.images.pin.path);
 
         ui.Codec codec = await ui.instantiateImageCodec(
             imageData.buffer.asUint8List(),
@@ -101,10 +103,7 @@ Future<Set<Marker>> googleMapMarker(GoogleMapMarkerRef ref) async {
 //       SizedBox(
 //         height: 55,
 //         width: 40,
-//         child: Image.asset(
-//           'assets/images/pin.png',
-//           fit: BoxFit.cover,
-//         ),
+//         child: Assets.images.pin.image(fit: BoxFit.cover),
 //       ),
 //       Positioned(
 //         top: 11,

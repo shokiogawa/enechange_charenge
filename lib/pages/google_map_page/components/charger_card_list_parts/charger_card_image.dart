@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../gen/assets.gen.dart';
+
 class ChargerCardImage extends StatelessWidget {
   const ChargerCardImage({super.key, required this.images});
 
@@ -14,9 +16,6 @@ class ChargerCardImage extends StatelessWidget {
             imageUrl: images[0],
             fit: BoxFit.fitWidth,
           )
-        : Image.asset(
-            'assets/images/noImage.png',
-            fit: BoxFit.fill,
-          );
+        : Assets.images.noImage.image(fit: BoxFit.fill);
   }
 }
