@@ -8,6 +8,7 @@ import '../repository/charger_spots_repository.dart';
 
 part 'fetch_charger_spot_provider.g.dart';
 
+// 充電スポット取得のステータスを表現
 sealed class ChargerSpotDataStatus {
   const ChargerSpotDataStatus();
 }
@@ -37,26 +38,31 @@ class SuccessData extends ChargerSpotDataStatus {
 @riverpod
 class FetchChargerSpotNotifier extends _$FetchChargerSpotNotifier {
   @override
-  FutureOr<ChargerSpotDataStatus> build() {
-    return _future();
-  }
-
-  Future<ChargerSpotDataStatus> _future() async {
+  FutureOr<ChargerSpotDataStatus> build() async {
     // 現在の表示中の範囲を取得する
     final visibleRegionArea =
         await (await ref.watch(googleMapControllerProvider).future)
             .getVisibleRegion();
+    return _future(
+        swLat: visibleRegionArea.southwest.latitude.toString(),
+        swLng: visibleRegionArea.southwest.longitude.toString(),
+        neLat: visibleRegionArea.northeast.latitude.toString(),
+        neLng: visibleRegionArea.northeast.longitude.toString());
+  }
 
+  Future<ChargerSpotDataStatus> _future({
+    required String swLat,
+    required String swLng,
+    required String neLat,
+    required String neLng,
+  }) async {
     // 現在表示中の範囲を元に、充電器スポットを取得する。
     final response = await ref
         .watch(chargerSpotRepositoryProvider)
         .getChargerSpots(
-            swLat: visibleRegionArea.southwest.latitude.toString(),
-            swLng: visibleRegionArea.southwest.longitude.toString(),
-            neLat: visibleRegionArea.northeast.latitude.toString(),
-            neLng: visibleRegionArea.northeast.longitude.toString());
+            swLat: swLat, swLng: swLng, neLat: neLat, neLng: neLng);
 
-    // 検索範囲が広すぎ場合
+    // 検索範囲が広すぎな場合
     if (response?.status == APIResponseStatusEnum.ngDistanceTooLong) {
       return const DistanceTooLarge();
     }
@@ -80,20 +86,28 @@ class FetchChargerSpotNotifier extends _$FetchChargerSpotNotifier {
           latitude: e.latitude as double,
           longitude: e.longitude as double,
           chargerDeviceCount: e.chargerDevices.length,
-          power: e.getDisplayPower(),
-          todayServiceTime: e.getDisplayTodayServiceTime(),
+          power: e.displayPower,
+          todayServiceTime: e.displayTodayServiceTime,
           nowAvailable: e.nowAvailable == APIChargerSpotNowAvailableEnum.yes,
-          regularClosingDays: e.getDisplayRegularClosingDays(),
+          regularClosingDays: e.displayRegularClosingDays,
           images: e.images.map((e) => e.url).toList());
     }).toList();
 
     return SuccessData(data);
   }
 
-  // 再検索
-  // invalidateでもよいが、何を行なっているのかわかりやすくするためメソッドを作成
-  Future<void> searchChargerSpot() async {
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(_future);
+  // 単方向データフローにするため、UI側から軽度緯度を取得する。
+  Future<void> searchChargerSpot({
+    required String swLat,
+    required String swLng,
+    required String neLat,
+    required String neLng,
+  }) async {
+    // ローディング
+    state = const AsyncLoading<ChargerSpotDataStatus>();
+    state = await AsyncValue.guard(() async {
+      return await _future(
+          swLat: swLat, swLng: swLng, neLat: neLat, neLng: neLng);
+    });
   }
 }

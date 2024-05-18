@@ -22,10 +22,12 @@ class ChargerCardList extends HookConsumerWidget {
     return switch (asyncValue) {
       // エラー時
       AsyncError() => Container(),
+
       // ローディング処理
       AsyncLoading() => const SizedBox(
           height: 270,
           child: Card(child: Center(child: CircularProgressIndicator()))),
+
       // 正常処理時
       AsyncValue<ChargerSpotDataStatus>(:final value) => switch (value) {
           SuccessData(:final chargerList) => DraggableScrollableSheet(
@@ -46,7 +48,7 @@ class ChargerCardList extends HookConsumerWidget {
                         const CurrentLocationIcon(),
                         SizedBox(
                             // height: 285,
-                          height: MediaQuery.textScalerOf(context).scale(285),
+                            height: MediaQuery.textScalerOf(context).scale(285),
                             child: PageView.builder(
                                 controller: ref.watch(pageControllerProvider),
                                 onPageChanged: (int index) async {

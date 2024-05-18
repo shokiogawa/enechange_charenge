@@ -37,7 +37,7 @@ class ChargerCard extends HookConsumerWidget {
                 duration: const Duration(milliseconds: 100),
                 curve: Curves.easeInOut);
 
-            // 対象の場所に飛ぶ
+            // カードをあげた場合は、対象スポットの場所に飛ぶ
             ref
                 .read(changeLocationProvider.notifier)
                 .toTargetLocation(data.latitude, data.longitude);
@@ -91,7 +91,7 @@ class ChargerCard extends HookConsumerWidget {
                           child: const Row(
                             children: [
                               Flexible(
-                                flex:7,
+                                flex: 7,
                                 child: Text("地図アプリで経路をみる",
                                     style: TextStyle(
                                       color: Color(0xff56C600),

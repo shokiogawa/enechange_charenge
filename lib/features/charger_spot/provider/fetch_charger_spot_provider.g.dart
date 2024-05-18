@@ -7,7 +7,7 @@ part of 'fetch_charger_spot_provider.dart';
 // **************************************************************************
 
 String _$fetchChargerSpotNotifierHash() =>
-    r'3b736a686ff4828e7a0d538221b51de14ca6f2f1';
+    r'588a34c7d90798b4122d2c0072723ef88d59709a';
 
 /// See also [FetchChargerSpotNotifier].
 @ProviderFor(FetchChargerSpotNotifier)

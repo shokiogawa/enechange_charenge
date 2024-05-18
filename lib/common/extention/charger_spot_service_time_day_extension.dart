@@ -3,7 +3,7 @@ import 'package:openapi/api.dart';
 extension APIChargerSpotServiceTimeDayEnumExtension
 on APIChargerSpotServiceTimeDayEnum {
   // 曜日の日本語表記を取得するメソッドを追加する
-  String getJapaneseName() {
+  String get japaneseName {
     switch (this) {
       case APIChargerSpotServiceTimeDayEnum.monday:
         return '月曜日';
@@ -22,7 +22,7 @@ on APIChargerSpotServiceTimeDayEnum {
       case APIChargerSpotServiceTimeDayEnum.holiday:
         return "祝日";
       case APIChargerSpotServiceTimeDayEnum.weekday:
-        return "週末";
+        return "平日";
       default:
         return '';
     }

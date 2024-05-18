@@ -18,8 +18,11 @@ part 'google_map_marker_provider.g.dart';
 
 @riverpod
 Future<Set<Marker>> googleMapMarker(GoogleMapMarkerRef ref) async {
+  // 充電スポットのProviderを親にもつ。
   final status = await ref.watch(fetchChargerSpotNotifierProvider.future);
+
   switch (status) {
+    // 充電スポット取得時のみマーカーを作成する。
     case SuccessData(:final chargerList):
       List<Marker> markerList = <Marker>[];
       await Future.forEach(chargerList.asMap().entries, (e) async {
@@ -88,8 +91,8 @@ Future<Set<Marker>> googleMapMarker(GoogleMapMarkerRef ref) async {
             infoWindow: InfoWindow(title: value.name));
         markerList.add(createdMarker);
       });
-
       return markerList.toSet();
+    // データが存在しない場合は空を返す。
     default:
       return <Marker>{};
   }

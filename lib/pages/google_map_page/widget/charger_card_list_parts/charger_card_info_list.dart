@@ -27,20 +27,20 @@ class ChargerCardInfoList extends HookConsumerWidget {
         ChargerCardInfo(
             iconData: Icons.electric_bolt,
             label: const Text("充電出力"),
-            value: "${data.power}kW"),
+            value: data.power),
         const SizedBox(height: 7),
         // 営業中
         ChargerCardInfo(
           iconData: Icons.access_time_outlined,
           label: data.nowAvailable
               ? const Text(
-            "営業中",
-            style: TextStyle(color: Color(0xff56C600)),
-          )
+                  "営業中",
+                  style: TextStyle(color: Color(0xff56C600)),
+                )
               : const Text(
-            "営業時間外",
-            style: TextStyle(color: Color(0xff949494)),
-          ),
+                  "営業時間外",
+                  style: TextStyle(color: Color(0xff949494)),
+                ),
           value: data.todayServiceTime,
         ),
         const SizedBox(height: 7),
