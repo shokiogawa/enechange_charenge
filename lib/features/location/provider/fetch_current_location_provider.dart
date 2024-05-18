@@ -8,7 +8,6 @@ import '../model/location_model.dart';
 part 'fetch_current_location_provider.g.dart';
 
 // 現在位置を取得する
-// 未許可の場合は、東京駅の場所を表示
 @riverpod
 Future<LocationModel> fetchCurrentLocation(FetchCurrentLocationRef ref) async {
   final checkLocationSettings =

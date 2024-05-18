@@ -1,12 +1,7 @@
-import 'dart:typed_data';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map_app/features/charger_spot/model/charger_spot_model.dart';
 import 'package:flutter_map_app/features/charger_spot/provider/fetch_charger_spot_provider.dart';
-import 'package:flutter_map_app/pages/google_map_page/provider/draggable_controller_provider.dart';
 import 'package:flutter_map_app/pages/google_map_page/provider/page_controller_provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -23,7 +18,7 @@ Future<Set<Marker>> googleMapMarker(GoogleMapMarkerRef ref) async {
 
   switch (status) {
     // 充電スポット取得時のみマーカーを作成する。
-    case SuccessData(:final chargerList):
+    case DataExist(:final chargerList):
       List<Marker> markerList = <Marker>[];
       await Future.forEach(chargerList.asMap().entries, (e) async {
         final index = e.key;

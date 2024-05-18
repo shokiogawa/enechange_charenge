@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map_app/features/charger_spot/provider/charger_spot_scoped_provider.dart';
 import 'package:flutter_map_app/features/charger_spot/provider/fetch_charger_spot_provider.dart';
@@ -18,7 +20,6 @@ class ChargerCardList extends HookConsumerWidget {
     final controller = ref.watch(draggableControllerProvider);
     // チャージスポット取得
     final asyncValue = ref.watch(fetchChargerSpotNotifierProvider);
-
     return switch (asyncValue) {
       // エラー時
       AsyncError() => Container(),
@@ -30,7 +31,7 @@ class ChargerCardList extends HookConsumerWidget {
 
       // 正常処理時
       AsyncValue<ChargerSpotDataStatus>(:final value) => switch (value) {
-          SuccessData(:final chargerList) => DraggableScrollableSheet(
+          DataExist(:final chargerList) => DraggableScrollableSheet(
               controller: controller,
               initialChildSize: GoogleMapPageConstant.cardBottomPosition,
               minChildSize: GoogleMapPageConstant.cardBottomPosition,

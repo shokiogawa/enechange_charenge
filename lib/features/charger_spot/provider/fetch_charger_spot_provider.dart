@@ -29,8 +29,8 @@ class DataEmpty extends ChargerSpotDataStatus {
 }
 
 // データ取得時
-class SuccessData extends ChargerSpotDataStatus {
-  const SuccessData(this.chargerList);
+class DataExist extends ChargerSpotDataStatus {
+  const DataExist(this.chargerList);
 
   final List<ChargerSpotModel> chargerList;
 }
@@ -93,7 +93,7 @@ class FetchChargerSpotNotifier extends _$FetchChargerSpotNotifier {
           images: e.images.map((e) => e.url).toList());
     }).toList();
 
-    return SuccessData(data);
+    return DataExist(data);
   }
 
   // 単方向データフローにするため、UI側から軽度緯度を取得する。
@@ -103,7 +103,7 @@ class FetchChargerSpotNotifier extends _$FetchChargerSpotNotifier {
     required String neLat,
     required String neLng,
   }) async {
-    // ローディング
+    // ローディング表示をする
     state = const AsyncLoading<ChargerSpotDataStatus>();
     state = await AsyncValue.guard(() async {
       return await _future(
