@@ -20,6 +20,9 @@ flutter run --dart-define-from-file=dart_defines/dev.env
 flutter run --release --dart-define-from-file=dart_defines/prod.env
 ```
 
+【参考】
+https://github.com/shokiogawa/enechange_charenge/blob/challenge1/shokiogawa/assets/set_env.png
+
 ## フォルダ構成
 ```
 
@@ -61,9 +64,9 @@ flutter run --release --dart-define-from-file=dart_defines/prod.env
 画面に関するものが置かれるフォルダ。
 Scaffoldを含んだメインのページ(google_map_page.dart)を起点とし、bodyのWidget(google_map_page_body.dart)別フォルダに切り分け。
 
-components: そのページ内で使用するコンポーネント群
 constant: そのページ内で使用する定数
-provider: そのページ内で使用するprovider (View Model的な立ち位置に近い)、featuresで定義したproviderのデータを画面に適したものに分割する役割もあり。
+provider: Widgetに比較的依存したprovider (Controller的な立ち位置に近い)、featuresで定義したproviderのデータを画面に適したものに分割する役割もあり。
+widgets: そのページ内で使用するWidget群
 
 ※ pagesフォルダを、featuresに配置しなかった理由は、複数のfeaturesをpagesが使用する可能性があるためトップレベルでフォルダを分割。
 
@@ -135,7 +138,12 @@ flowchart TB
 
 ## その他
 
-### scoped providerについて
+### flutter gen
+画像使用時、タイポなどのミスを防ぐため、[flutter_gen](https://pub.dev/packages/flutter_gen)を使用。
+
+
+
+### scoped provider
 Widgetにconstを付与するために、Widgetの引数からデータをバケツリレーするのではなく、provider scopedを使用してデータを渡すようにしています。
 
 
