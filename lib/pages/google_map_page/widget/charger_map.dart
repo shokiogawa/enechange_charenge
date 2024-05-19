@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_map_app/features/location/provider/fetch_current_location_provider.dart';
+import 'package:flutter_map_app/common/provider/fetch_current_location_provider.dart';
 import 'package:flutter_map_app/pages/google_map_page/provider/google_map_marker_provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -26,7 +26,7 @@ class ChargerMap extends HookConsumerWidget {
         final latLang = switch (currentLocationAsyncValue) {
           AsyncData(value: final value) =>
             LatLng(value.latitude, value.longitude),
-          _ => LatLng(LocationConstant.tokyoStationLatitude,
+          _ => const LatLng(LocationConstant.tokyoStationLatitude,
               LocationConstant.tokyoStationLongitude)
         };
         // マーカーを取得

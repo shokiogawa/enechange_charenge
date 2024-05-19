@@ -5,7 +5,6 @@ import 'package:openapi/api.dart';
 
 void main() {
   group('fetch_charger_spot_provider Test', () {
-    // TODO: Mockitoなどでテストをする。
     test("テストの準備 テンプレート作成", () async {
       // コンテナ作成
       final container = ProviderContainer(overrides: [
@@ -13,9 +12,14 @@ void main() {
             .overrideWithValue(MockChargerSpotsRepository())
       ]);
 
+      // コンテナのdispose処理
+      addTearDown(container.dispose);
+
       final data = await container
           .read(chargerSpotRepositoryProvider)
           .getChargerSpots(swLat: '', swLng: '', neLat: '', neLng: '');
+
+      // statusがokかどうかの確認 (あくまでもサンプルテスト↓の様な単純明快なテストはしない。)
       expect(data?.status, APIResponseStatusEnum.ok);
     });
   });

@@ -6,7 +6,7 @@ part of 'google_map_marker_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$googleMapMarkerHash() => r'fdf8f2675746997fad374f24dc2f70adbb518a05';
+String _$googleMapMarkerHash() => r'c0579b54246745d8e2e5a30505e1241c0b7e250a';
 
 /// See also [googleMapMarker].
 @ProviderFor(googleMapMarker)

@@ -2,9 +2,6 @@ import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../common/const/location.dart';
-import '../model/location_model.dart';
-
 part 'check_current_location_settings_provider.g.dart';
 
 // 現在位置設定のステータス

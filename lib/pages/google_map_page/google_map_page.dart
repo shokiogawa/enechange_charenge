@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_app/features/charger_spot/provider/fetch_charger_spot_provider.dart';
-import 'package:flutter_map_app/features/location/provider/check_current_location_settings_provider.dart';
-import 'package:flutter_map_app/features/location/provider/fetch_current_location_provider.dart';
+import 'package:flutter_map_app/common/provider/check_current_location_settings_provider.dart';
+import 'package:flutter_map_app/common/provider/fetch_current_location_provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

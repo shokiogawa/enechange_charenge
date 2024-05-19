@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../../features/location/provider/fetch_current_location_provider.dart';
+import '../../../common/provider/fetch_current_location_provider.dart';
 import '../../../common/provider/google_map_controller_provider.dart';
 
 part 'change_location_provider.g.dart';

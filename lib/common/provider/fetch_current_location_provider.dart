@@ -1,11 +1,23 @@
 import 'dart:async';
-import 'package:flutter_map_app/features/location/provider/check_current_location_settings_provider.dart';
+import 'package:flutter_map_app/common/provider/check_current_location_settings_provider.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../../common/const/location.dart';
-import '../model/location_model.dart';
+import '../const/location.dart';
 
+part 'fetch_current_location_provider.freezed.dart';
 part 'fetch_current_location_provider.g.dart';
+
+@freezed
+class LocationModel with _$LocationModel{
+  factory LocationModel({
+    @Default(0) double latitude,
+    @Default(0) double longitude
+  }) = _LocationModel;
+
+  factory LocationModel.fromJson(Map<String, dynamic> json) =>
+      _$LocationModelFromJson(json);
+}
 
 // 現在位置を取得する
 @riverpod
