@@ -1,13 +1,15 @@
 # Flutter Coding Challenge
 
-## 実行方法
+## ビルドの下準備とビルド方法
 
-1. dart_definesフォルダに、「dev.env」、「prod.env」ファイルを作成してください。
+1. libフォルダと同列階層に、dart_definesフォルダを作成し、そこに「dev.env」、「prod.env」ファイルを作成してください。
 2. 上記ファイルに、以下のように、Google API Key、API Key をそれぞれ記載してください。(今回は、dev.envもprod.envも同じキーが入ります。)
 ```
+flavor="dev"
 GOOGLE_MAP_API_KEY="XXXXX"
 ENECHANGE_API_KEY="XXXXX"
 ```
+※ prod.envには、flavor="prod"を入れる。
 
 3. デバッグ、リリースビルドは以下のコマンドをうち実行してください。
 ```
@@ -22,23 +24,20 @@ flutter run --release --dart-define-from-file=dart_defines/prod.env
 ```
 
 ├── common
+│     ├── const
+│     ├── extention
 │     ├── provider
-│     ├── utility
-│     └── const
+│     └── widget
 ├── features
-│     ├── charger_spot
-│     │     ├── model
-│     │     ├── provider
-│     │     └── repository
-│     └── location
-│           ├── model
-│           ├── provider
-│           └── repository
+│     └── charger_spot
+│          ├── model
+│          ├── provider
+│          └── repository
 └── pages
       └── google_map_page
-            ├── components
             ├── constant
             ├── provider
+            ├── widget
             ├── google_map_page.dart
             └── google_map_page_body.dart
 
@@ -46,7 +45,7 @@ flutter run --release --dart-define-from-file=dart_defines/prod.env
 
 ### commonフォルダ
 アプリ全体で共通で使用するものを配置する。
-今回は、privider、utility、constを配置。
+今回は、const、extention、provider、widgetを配置。
 
 ### featuresフォルダ
 機能単位でフォルダ分けを行う、アプリのコアとなるフォルダ。
@@ -68,14 +67,75 @@ provider: そのページ内で使用するprovider (View Model的な立ち位�
 
 ※ pagesフォルダを、featuresに配置しなかった理由は、複数のfeaturesをpagesが使用する可能性があるためトップレベルでフォルダを分割。
 
+## riverpod_graph
+riverpod_graphを導入しました。
 
+### メリット
+- どのproviderがどこで使用されているか確認しやすい。
+- providerが循環参照していないか確認できる。
+
+```mermaid
+flowchart TB
+  subgraph Arrows
+    direction LR
+    start1[ ] -..->|read| stop1[ ]
+    style start1 height:0px;
+    style stop1 height:0px;
+    start2[ ] --->|listen| stop2[ ]
+    style start2 height:0px;
+    style stop2 height:0px;
+    start3[ ] ===>|watch| stop3[ ]
+    style start3 height:0px;
+    style stop3 height:0px;
+  end
+  subgraph Type
+    direction TB
+    ConsumerWidget((widget));
+    Provider[[provider]];
+  end
+
+  fetchChargerSpotNotifierProvider[["fetchChargerSpotNotifierProvider"]];
+  googleMapControllerProvider[["googleMapControllerProvider"]];
+  fetchCurrentLocationProvider[["fetchCurrentLocationProvider"]];
+  checkCurrentLocationSettingsProvider[["checkCurrentLocationSettingsProvider"]];
+  googleMapMarkerProvider[["googleMapMarkerProvider"]];
+  draggableControllerProvider[["draggableControllerProvider"]];
+  pageControllerProvider[["pageControllerProvider"]];
+  changeLocationProvider[["changeLocationProvider"]];
+  chargerSpotScopedProvider[["chargerSpotScopedProvider"]];
+  SearchField((SearchField));
+  ChargerMap((ChargerMap));
+  ChargerCardList((ChargerCardList));
+  _CurrentLocationIcon((_CurrentLocationIcon));
+  _ChargerCard((_ChargerCard));
+  GoogleMapPage((GoogleMapPage));
+
+  fetchChargerSpotNotifierProvider ==> SearchField;
+  googleMapControllerProvider ==> SearchField;
+  fetchChargerSpotNotifierProvider -.-> SearchField;
+  fetchCurrentLocationProvider ==> ChargerMap;
+  googleMapMarkerProvider ==> ChargerMap;
+  googleMapControllerProvider ==> ChargerMap;
+  draggableControllerProvider ==> ChargerCardList;
+  fetchChargerSpotNotifierProvider ==> ChargerCardList;
+  pageControllerProvider ==> ChargerCardList;
+  changeLocationProvider -.-> ChargerCardList;
+  fetchCurrentLocationProvider ==> _CurrentLocationIcon;
+  changeLocationProvider -.-> _CurrentLocationIcon;
+  draggableControllerProvider ==> _ChargerCard;
+  chargerSpotScopedProvider ==> _ChargerCard;
+  changeLocationProvider -.-> _ChargerCard;
+  fetchChargerSpotNotifierProvider --> GoogleMapPage;
+  checkCurrentLocationSettingsProvider --> GoogleMapPage;
+  googleMapControllerProvider ==> fetchChargerSpotNotifierProvider;
+  checkCurrentLocationSettingsProvider ==> fetchCurrentLocationProvider;
+  fetchChargerSpotNotifierProvider ==> googleMapMarkerProvider;
+  pageControllerProvider -.-> googleMapMarkerProvider;
+```
 
 ## その他
 
 ### scoped providerについて
 Widgetにconstを付与するために、Widgetの引数からデータをバケツリレーするのではなく、provider scopedを使用してデータを渡すようにしています。
 
-```
-flutter pub run build_runner build --delete-conflicting-outputs
-```
 
