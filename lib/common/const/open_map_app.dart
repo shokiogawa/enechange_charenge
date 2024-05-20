@@ -13,7 +13,7 @@ class OpenMap {
       url = Uri.parse(
           '$googleMapApp/maps/dir/?api=1&destination=$latitude,$longitude');
     } else if (Platform.isIOS) {
-      url = Uri.parse('$appleMapApp?daddr=$latitude,$longitude');
+      url = Uri.parse('$appleMapApp?daddr=$latitude,$longitude&dirflg=d');
     } else {
       throw UnsupportedError("This platform is not supported");
     }
