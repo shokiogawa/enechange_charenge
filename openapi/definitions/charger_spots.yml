@@ -15,7 +15,7 @@ paths:
       tags:
         - charger_spots
       parameters:
-        - $ref: "./components/attributes.yml#/attributes/parameters/x_ene_native_api_token"
+        - $ref: "./widget/attributes.yml#/attributes/parameters/x_ene_native_api_token"
         - name: user_uuid
           in: query
           description: 'ユーザのuuid'
@@ -122,7 +122,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Response"
+                $ref: "#/widget/schemas/Response"
 
 components:
   schemas:
@@ -145,7 +145,7 @@ components:
           type: array
           nullable: false
           items:
-            $ref: "#/components/schemas/ChargerSpot"
+            $ref: "#/widget/schemas/ChargerSpot"
     ChargerSpot:
       type: object
       required:
@@ -203,7 +203,7 @@ components:
           type: array
           description: 充電スポットの写真URL（fields指定がない場合は返却される）
           items:
-            $ref: "#/components/schemas/ChargerSpotImage"
+            $ref: "#/widget/schemas/ChargerSpotImage"
         service_time_note:
           type: string
           nullable: true
@@ -220,27 +220,27 @@ components:
           type: array
           description: 同じ充電出力、単価でグルーピングされた単価。
           items:
-            $ref: "#/components/schemas/GroupedTotalUnitPricesThisMonthNextMonth"
+            $ref: "#/widget/schemas/GroupedTotalUnitPricesThisMonthNextMonth"
         grouped_total_unit_prices_this_month_next_month_by_user:
           type: array
           description: プロモコードを登録したユーザーに応じて、同じ充電出力、単価でグルーピングされた単価（プロモコードを登録すると充電単価が変わるケースがある）。
           items:
-            $ref: "#/components/schemas/GroupedTotalUnitPricesThisMonthNextMonthByUser"
+            $ref: "#/widget/schemas/GroupedTotalUnitPricesThisMonthNextMonthByUser"
         charger_spot_service_times:
           type: array
           description: サービス提供時間（データが存在しない場合は空配列、fields指定がない場合は返却される）
           items:
-            $ref: "#/components/schemas/ChargerSpotServiceTime"
+            $ref: "#/widget/schemas/ChargerSpotServiceTime"
         charger_devices:
           type: array
           description: 充電器情報
           items:
-            $ref: "#/components/schemas/ChargerDevice"
+            $ref: "#/widget/schemas/ChargerDevice"
         gogoev_charger_devices:
           type: array
           description: Gogoevの充電器情報（Gogoevの充電器のみ、fields指定がない場合は返却される）
           items:
-            $ref: "#/components/schemas/GogoevChargerDevice"
+            $ref: "#/widget/schemas/GogoevChargerDevice"
         address:
           type: string
           nullable: true
@@ -305,7 +305,7 @@ components:
           type: array
           description: '最初の60分は無料といった単価設定に対応するため、配列で出力。'
           items:
-            $ref: "#/components/schemas/MonthPrice"
+            $ref: "#/widget/schemas/MonthPrice"
     GroupedTotalUnitPricesThisMonthNextMonthByUser:
       type: object
       description: '同じ充電出力、単価でグルーピングされた単価。月によって単価が異なるため、25日以降は翌月も出力する'
@@ -329,7 +329,7 @@ components:
           type: array
           description: '最初の60分は無料といった単価設定に対応するため、配列で出力。'
           items:
-            $ref: "#/components/schemas/MonthPrice"
+            $ref: "#/widget/schemas/MonthPrice"
     ChargerSpotServiceTime:
       type: object
       required:
@@ -481,7 +481,7 @@ components:
         prices:
           type: array
           items:
-            $ref: "#/components/schemas/Price"
+            $ref: "#/widget/schemas/Price"
     Price:
       type: object
       required:

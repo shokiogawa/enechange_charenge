@@ -1,7 +1,19 @@
+import 'package:flutter_map_app/configuration.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:openapi/api.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'charger_spots_repository.g.dart';
+
+@riverpod
+ChargerSpotsRepository chargerSpotRepository(ChargerSpotRepositoryRef ref){
+  return ChargerSpotsRepository(ref);
+}
 
 class ChargerSpotsRepository {
-  ChargerSpotsRepository();
+
+  final Ref ref;
+  ChargerSpotsRepository(this.ref);
 
   Future<APIResponse?> getChargerSpots({
     required String swLat,
@@ -10,9 +22,8 @@ class ChargerSpotsRepository {
     required String neLng,
   }) async {
     // キーは直接コミットしないようお願いします
-    const apiKey = 'YOUR_KEY_HERE';
     final APIResponse? result = await ChargerSpotsApi().chargerSpots(
-      apiKey,
+      Configuration.apiKey,
       swLat: swLat,
       swLng: swLng,
       neLat: neLat,
